@@ -50,3 +50,6 @@ Puedes visitar el sitio en https://lebrokennn.github.io/pizzeria-mamma-mia-main/
 | **Home.jsx**   | 🏠 Renderiza el `Header` y 3 tarjetas de pizzas (`CardPizza`) |
 | **CardPizza.jsx** | 🍕 Muestra **nombre**, **ingredientes**, **precio** y botones `Ver más / Añadir` <br> 📦 Recibe props dinámicos: `name`, `price`, `ingredients`, `img` |
 | **Footer.jsx** | 📜 Texto centrado: `© 2025 - Pizzería Mamma Mía! - Todos los derechos reservados` |
+
+--------------------------------------------------------------
+
