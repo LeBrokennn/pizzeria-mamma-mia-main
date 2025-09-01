@@ -17,7 +17,7 @@ Puedes visitar el sitio en github pages https://magicux.github.io/pizzeria-mamma
 ---
 
 ## 📂 Estructura del proyecto
-pizzeria-mamma-mia/
+```pizzeria-mamma-mia/
 ├─ public/
 │ └─ pizza.png # favicon personalizado
 ├─ src/
