@@ -45,10 +45,10 @@ Puedes visitar el sitio en https://lebrokennn.github.io/pizzeria-mamma-mia-main/
 
 | Componente     | Funcionalidad |
 |----------------|---------------|
-| **Navbar.jsx** | 🍕 Siempre muestra: `Home` y 🛒 `Total: $XX.XXX` <br> 🔑 Renderiza dinámicamente `Login / Register` o `Profile / Logout` según exista un `token` <br> 💲 Total formateado con separadores de miles (CLP) |
-| **Header.jsx** | 🖼️ Sección **hero** con imagen de fondo, título y subtítulo centrados |
-| **Home.jsx**   | 🏠 Renderiza el `Header` y 3 tarjetas de pizzas (`CardPizza`) |
-| **CardPizza.jsx** | 🍕 Muestra **nombre**, **ingredientes**, **precio** y botones `Ver más / Añadir` <br> 📦 Recibe props dinámicos: `name`, `price`, `ingredients`, `img` |
-| **Footer.jsx** | 📜 Texto centrado: `© 2025 - Pizzería Mamma Mía! - Todos los derechos reservados` |
+|Navbar.jsx| 🍕 Siempre muestra: `Home` y 🛒 `Total: $XX.XXX` <br> 🔑 Renderiza dinámicamente `Login / Register` o `Profile / Logout` según exista un `token` <br> 💲 Total formateado con separadores de miles (CLP) |
+|Header.jsx| 🖼️ Sección **hero** con imagen de fondo, título y subtítulo centrados |
+|Home.jsx| 🏠 Renderiza el `Header` y 3 tarjetas de pizzas (`CardPizza`) |
+|CardPizza.jsx| 🍕 Muestra **nombre**, **ingredientes**, **precio** y botones `Ver más / Añadir` <br> 📦 Recibe props dinámicos: `name`, `price`, `ingredients`, `img` |
+|Footer.jsx**| 📜 Texto centrado: `© 2025 - Pizzería Mamma Mía! - Todos los derechos reservados` |
 --------------------------------------------------------------
 
