@@ -20,7 +20,9 @@ const CardPizza = ({ name, price, ingredients = [], img }) => {
             <button className="btn btn-outline-primary">Ver más</button>
             <button className="btn btn-primary">Añadir</button>
           </div>
-        </div>
+        </div
+      
+      >
       </div>
     </div>
   )
