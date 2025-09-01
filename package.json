@@ -2,6 +2,7 @@
   "name": "pizzeria-mamma-mia",
   "private": false,
   "version": "0.0.0",
+  "homepage": "https://lebrokennn.github.io/pizzeria-mamma-mia-main/",
   "type": "module",
   "scripts": {
     "dev": "vite",
