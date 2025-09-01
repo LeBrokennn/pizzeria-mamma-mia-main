@@ -41,10 +41,11 @@ Puedes visitar el sitio en https://lebrokennn.github.io/pizzeria-mamma-mia-main/
 
 ## 🖼️ Funcionalidades implementadas en este hito
 
-| Componente    | Funcionalidad |
-|---------------|---------------|
-| Navbar.jsx    | Siempre muestra Home y Total; Renderiza dinámicamente Login/Register o Profile/Logout; Total formateado con separadores de miles |
-| Header.jsx    | Sección hero con imagen de fondo, título y subtítulo centrados |
-| Home.jsx      | Renderiza el Header y 3 tarjetas de pizzas (CardPizza) |
-| CardPizza.jsx | Muestra nombre, ingredientes, precio y botones Ver más / Añadir; Recibe props: name, price, ingredients, img |
-| Footer.jsx    | Texto centrado: © 2025 - Pizzería Mamma Mía! - Todos los derechos reservados |
+| Componente     | Funcionalidad |
+|----------------|---------------|
+| Navbar.jsx     | 🍕 Siempre muestra Home y Total; 🔑 Renderiza dinámicamente Login/Register o Profile/Logout; 💲 Total formateado con separadores de miles |
+| Header.jsx     | 🖼️ Sección hero con imagen de fondo, título y subtítulo centrados |
+| Home.jsx       | 🏠 Renderiza el Header y 3 tarjetas de pizzas (CardPizza) |
+| CardPizza.jsx  | 🍕 Muestra nombre, ingredientes, precio y botones Ver más / Añadir; 📦 Recibe props: name, price, ingredients, img |
+| Footer.jsx     | 📜 Texto centrado: © 2025 - Pizzería Mamma Mía! - Todos los derechos reservados |
+________________________________________________________________________
