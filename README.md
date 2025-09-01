@@ -39,8 +39,7 @@ Puedes visitar el sitio en https://lebrokennn.github.io/pizzeria-mamma-mia-main/
 └─ vite.config.js
 
 
----
-
+--------------------------------------------------------------
 ## 🖼️ Funcionalidades implementadas en este hito
 
 | Componente     | Funcionalidad |
