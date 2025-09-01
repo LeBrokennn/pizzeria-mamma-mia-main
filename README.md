@@ -3,7 +3,7 @@
 Proyecto desarrollado en **React + Vite + Bootstrap** como parte del Hito 1 del curso.  
 Este proyecto implementa una primera versión de la aplicación de la pizzería **Mamma Mía**, con componentes reutilizables, props y un layout básico.
 
-Puedes visitar el sitio en github pages https://magicux.github.io/pizzeria-mamma-mia/
+Puedes visitar el sitio en https://lebrokennn.github.io/pizzeria-mamma-mia-main/
 
 ---
 
@@ -56,34 +56,3 @@ Puedes visitar el sitio en github pages https://magicux.github.io/pizzeria-mamma
 - **Footer.jsx**
   - Texto centrado: `© 2025 - Pizzería Mamma Mía! - Todos los derechos reservados`
 
----
-
-## ⚙️ Instalación y uso
-
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/magicux/pizzeria-mamma-mia.git
-   cd pizzeria-mamma-mia
-
-
-Instalar dependencias:
-
-npm install
-
-
-Ejecutar en desarrollo:
-
-npm run dev
-
-
-Crear build de producción:
-
-npm run build
-
-
-Previsualizar build:
-
-npm run preview
-
-🌐 Despliegue
-Pendiente para los próximos hitos
