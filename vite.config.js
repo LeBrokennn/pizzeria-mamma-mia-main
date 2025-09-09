@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/pizzeria-mamma-mia/', // repo de github pages
+  base: '/pizzeria-mamma-mia-main/', // repo de github pages
 });
 
