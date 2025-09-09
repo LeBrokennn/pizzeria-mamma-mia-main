@@ -2,6 +2,10 @@ import { useState } from "react";
 import LoginForm from "./components/LoginForm.jsx";
 import RegisterForm from "./components/RegisterForm.jsx";
 
+// 👇 importa tus componentes de pizzas
+import CardPizza from "./components/CardPizza.jsx";
+import PizzaList from "./components/PizzaList.jsx";
+
 function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
@@ -39,7 +43,18 @@ function App() {
       <main className="container mb-5">
         <section>
           <h2>Menú destacado</h2>
-          {/* Aquí tus tarjetas de pizzas, imágenes, etc */}
+
+          {/* Usa PizzaList si tienes lista de pizzas */}
+          <PizzaList />
+
+          {/* O usa varias CardPizza si lo manejas individual */}
+          {/* 
+          <div className="row">
+            <div className="col-md-4"><CardPizza /></div>
+            <div className="col-md-4"><CardPizza /></div>
+            <div className="col-md-4"><CardPizza /></div>
+          </div>
+          */}
         </section>
 
         <section className="mt-4">
@@ -48,7 +63,7 @@ function App() {
         </section>
       </main>
 
-      {/* MODALES DE LOGIN Y REGISTER */}
+      {/* MODALES */}
       {showLogin && (
         <div className="modal-overlay">
           <div className="modal-content">
