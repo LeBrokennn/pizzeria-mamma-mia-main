@@ -35,14 +35,11 @@ function App() {
         <p>Disfruta de nuestras deliciosas pizzas</p>
       </header>
 
-      {/* SECCIONES DE LA PÁGINA */}
+      {/* CONTENIDO PRINCIPAL */}
       <main className="container mb-5">
-        {showLogin && <LoginForm onClose={() => setShowLogin(false)} />}
-        {showRegister && <RegisterForm onClose={() => setShowRegister(false)} />}
-
         <section>
           <h2>Menú destacado</h2>
-          {/* Aquí puedes agregar tarjetas, imágenes, etc */}
+          {/* Aquí tus tarjetas de pizzas, imágenes, etc */}
         </section>
 
         <section className="mt-4">
@@ -51,10 +48,59 @@ function App() {
         </section>
       </main>
 
+      {/* MODALES DE LOGIN Y REGISTER */}
+      {showLogin && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="btn-close" onClick={() => setShowLogin(false)}>✖</button>
+            <LoginForm onClose={() => setShowLogin(false)} />
+          </div>
+        </div>
+      )}
+
+      {showRegister && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="btn-close" onClick={() => setShowRegister(false)}>✖</button>
+            <RegisterForm onClose={() => setShowRegister(false)} />
+          </div>
+        </div>
+      )}
+
       {/* FOOTER */}
       <footer className="bg-dark text-white text-center py-3">
         &copy; 2025 Pizzería Mamma Mía
       </footer>
+
+      {/* ESTILOS MODALES */}
+      <style>
+        {`
+          .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+          }
+          .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+          }
+          .btn-close {
+            position: absolute;
+            top: 10px; right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+          }
+        `}
+      </style>
     </>
   );
 }
