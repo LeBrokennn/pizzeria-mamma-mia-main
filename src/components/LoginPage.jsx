@@ -11,14 +11,30 @@ const LoginPage = () => {
     e.preventDefault();
     const { email, password } = form;
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!email || !password) {
-      return setMsg({ type: "danger", text: "Todos los campos son obligatorios." });
-    }
-    if (password.length < 6) {
-      return setMsg({ type: "warning", text: "La contraseña debe tener al menos 6 caracteres." });
+      return showMsg("danger", "Todos los campos son obligatorios.");
     }
 
-    setMsg({ type: "success", text: "Inicio de sesión exitoso ✅" });
+    if (!emailRegex.test(email)) {
+      return showMsg("danger", "El email no es válido.");
+    }
+
+    if (password.length < 6) {
+      return showMsg(
+        "warning",
+        "La contraseña debe tener al menos 6 caracteres."
+      );
+    }
+
+    showMsg("success", "Inicio de sesión exitoso ✅");
+  };
+
+  // Función para mostrar mensaje y que desaparezca automáticamente
+  const showMsg = (type, text) => {
+    setMsg({ type, text });
+    setTimeout(() => setMsg({ type: "", text: "" }), 5000);
   };
 
   return (
@@ -38,7 +54,14 @@ const LoginPage = () => {
             <div className="card-body p-4">
               <h5 className="card-title mb-3">Acceso</h5>
 
-              {msg.text && <div className={`alert alert-${msg.type} mb-3`}>{msg.text}</div>}
+              {msg.text && (
+                <div
+                  className={`alert alert-${msg.type} mb-3`}
+                  role="alert"
+                >
+                  {msg.text}
+                </div>
+              )}
 
               <form onSubmit={handleSubmit} noValidate>
                 <div className="mb-3">
@@ -53,6 +76,7 @@ const LoginPage = () => {
                       value={form.email}
                       onChange={onChange}
                       required
+                      autoComplete="email"
                     />
                   </div>
                 </div>
@@ -70,6 +94,7 @@ const LoginPage = () => {
                       onChange={onChange}
                       required
                       minLength={6}
+                      autoComplete="current-password"
                     />
                   </div>
                 </div>
@@ -91,3 +116,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
