@@ -1,11 +1,18 @@
 // src/components/CardPizza.jsx
 /* eslint-disable react/prop-types */
+import { useNavigate } from "react-router-dom";
 import { clp } from "../utils/format"; 
 
-const CardPizza = ({ name, price, ingredients, img }) => {
+const CardPizza = ({ id, name, price, ingredients, img }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/pizza/${id}`);
+  };
+
   return (
     <div className="col">
-      <div className="card h-100 shadow-sm">
+      <div className="card h-100 shadow-sm" style={{ cursor: 'pointer' }} onClick={handleCardClick}>
         <img src={img} className="card-img-top" alt={`Pizza ${name}`} />
         <div className="card-body">
           <h5 className="card-title mb-2">{name}</h5>
@@ -19,7 +26,15 @@ const CardPizza = ({ name, price, ingredients, img }) => {
             <span className="fw-bold fs-5">
               ${clp(price)}  {/* ← reemplazo de toLocaleString */}
             </span>
-            <button className="btn btn-primary">Añadir</button>
+            <button 
+              className="btn btn-primary"
+              onClick={(e) => {
+                e.stopPropagation();
+                // Aquí puedes agregar la lógica para añadir al carrito
+              }}
+            >
+              Añadir
+            </button>
           </div>
         </div>
       </div>

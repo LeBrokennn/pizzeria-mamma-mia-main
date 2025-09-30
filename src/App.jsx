@@ -5,6 +5,7 @@ import Home from "./views/Home.jsx";
 import LoginPage from "./components/LoginPage.jsx";
 import RegisterPage from "./components/RegisterPage.jsx";
 import Cart from "./components/Cart.jsx";
+import Pizza from "./components/Pizza.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/pizza/:id" element={<Pizza />} />
           <Route path="*" element={<h2 className="container my-4">Página no encontrada</h2>} />
         </Routes>
       </main>
