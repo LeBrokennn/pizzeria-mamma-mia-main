@@ -1,11 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
-import Home from "./views/Home.jsx";
-import LoginPage from "./components/LoginPage.jsx";
-import RegisterPage from "./components/RegisterPage.jsx";
-import Cart from "./components/Cart.jsx";
-import Pizza from "./components/Pizza.jsx";
+import Home from "./pages/Home.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import Cart from "./pages/Cart.jsx";
+import Pizza from "./pages/Pizza.jsx";
+import Profile from "./pages/Profile.jsx";
+import NotFound from "./pages/NotFound.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
 
@@ -17,11 +19,13 @@ function App() {
       <main className="flex-grow-1">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/pizza/:id" element={<Pizza />} />
-          <Route path="*" element={<h2 className="container my-4">Página no encontrada</h2>} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/404" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

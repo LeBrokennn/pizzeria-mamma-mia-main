@@ -8,6 +8,9 @@ Una aplicación web moderna para una pizzería construida con React y Vite, inte
 - **Páginas de Detalle**: Información completa de cada pizza con navegación dinámica
 - **Carrito de Compras**: Agrega y gestiona tus pedidos
 - **Autenticación**: Sistema de login y registro de usuarios
+- **Perfil de Usuario**: Gestión de información personal y sesión
+- **Sistema de Rutas**: Navegación completa con React Router DOM
+- **Página 404**: Manejo elegante de rutas no encontradas
 - **Integración con Backend**: Consumo de API REST para datos dinámicos
 - **Diseño Responsivo**: Optimizado para dispositivos móviles y desktop
 - **Navegación Intuitiva**: Fácil navegación entre secciones
@@ -76,19 +79,21 @@ Para que la aplicación funcione completamente, necesitas levantar el backend:
 src/
 ├── components/          # Componentes reutilizables
 │   ├── CardPizza.jsx   # Tarjeta de pizza individual (clickeable)
-│   ├── Cart.jsx        # Componente del carrito
 │   ├── Header.jsx      # Encabezado de la aplicación
 │   ├── Footer.jsx      # Pie de página
-│   ├── Navbar.jsx      # Barra de navegación
-│   ├── LoginPage.jsx   # Página de inicio de sesión
-│   ├── RegisterPage.jsx # Página de registro
-│   └── Pizza.jsx       # Página de detalle de pizza individual
+│   └── Navbar.jsx      # Barra de navegación con enlaces
+├── pages/              # Páginas principales (React Router)
+│   ├── Home.jsx        # Página de inicio (consume API)
+│   ├── Login.jsx       # Página de inicio de sesión
+│   ├── Register.jsx    # Página de registro
+│   ├── Cart.jsx        # Página del carrito de compras
+│   ├── Pizza.jsx       # Página de detalle de pizza individual
+│   ├── Profile.jsx     # Página de perfil de usuario
+│   └── NotFound.jsx    # Página 404 para rutas no encontradas
 ├── context/            # Contextos de React
 │   └── CartContext.jsx # Contexto del carrito de compras
 ├── data/               # Datos estáticos (ya no se usa, reemplazado por API)
 │   └── pizzas.js       # Información de las pizzas (legacy)
-├── views/              # Páginas principales
-│   └── Home.jsx        # Página de inicio (consume API)
 ├── utils/              # Utilidades
 │   └── format.js       # Funciones de formateo
 └── assets/             # Recursos estáticos
@@ -130,6 +135,34 @@ src/
 - Inicio de sesión
 - Gestión de sesiones
 
+### 👤 Perfil de Usuario
+
+- **Información personal**: Visualización del email del usuario
+- **Estado de cuenta**: Indicador de cuenta activa
+- **Cerrar sesión**: Botón para finalizar la sesión
+- **Navegación**: Enlaces de regreso al inicio
+
+### 🛣️ Sistema de Rutas
+
+- **Navegación completa**: 7 rutas principales configuradas
+- **Rutas dinámicas**: Parámetros de URL para pizzas específicas
+- **Página 404**: Manejo elegante de rutas no encontradas
+- **Navegación activa**: Estados visuales en el menú de navegación
+- **Enlaces del carrito**: Botón que redirige al carrito con total actualizado
+
+#### Rutas Disponibles
+
+| Ruta         | Componente | Descripción                             |
+| ------------ | ---------- | --------------------------------------- |
+| `/`          | Home       | Página principal con catálogo de pizzas |
+| `/login`     | Login      | Página de inicio de sesión              |
+| `/register`  | Register   | Página de registro de usuarios          |
+| `/cart`      | Cart       | Página del carrito de compras           |
+| `/pizza/:id` | Pizza      | Página de detalle de pizza específica   |
+| `/profile`   | Profile    | Página de perfil del usuario            |
+| `/404`       | NotFound   | Página de error 404                     |
+| `*`          | NotFound   | Catch-all para rutas no definidas       |
+
 ## 🔌 Integración con Backend
 
 ### Endpoints Utilizados
@@ -142,6 +175,42 @@ src/
 - **fetch API**: Peticiones HTTP nativas para obtener datos
 - **Manejo de estados**: Loading, error y success states
 - **Navegación por ID**: Búsqueda de pizzas específicas por su identificador
+
+## 🛣️ Sistema de Navegación
+
+### Características del Router
+
+- **React Router DOM v7.8.2**: Sistema de enrutamiento moderno y eficiente
+- **Navegación declarativa**: Uso de componentes `Link` y `NavLink`
+- **Estados activos**: Indicadores visuales de la página actual
+- **Navegación programática**: Control de navegación desde JavaScript
+- **Rutas anidadas**: Soporte para rutas complejas y parámetros
+
+### Componentes de Navegación
+
+#### Navbar
+
+- **Enlaces dinámicos**: Cambia según el estado de autenticación
+- **Botón del carrito**: Muestra el total y redirige a `/cart`
+- **Estados activos**: Resalta la página actual
+- **Responsive**: Adaptable a diferentes tamaños de pantalla
+
+#### Navegación entre páginas
+
+- **Home** (`/`): Catálogo principal de pizzas
+- **Login** (`/login`): Formulario de inicio de sesión
+- **Register** (`/register`): Formulario de registro
+- **Cart** (`/cart`): Carrito de compras
+- **Pizza** (`/pizza/:id`): Detalle de pizza específica
+- **Profile** (`/profile`): Perfil del usuario
+- **404** (`/404`): Página de error personalizada
+
+### Manejo de Errores
+
+- **Catch-all routes**: Captura todas las rutas no definidas
+- **Página 404 personalizada**: Diseño atractivo con opciones de navegación
+- **Enlaces de recuperación**: Botones para volver al inicio o carrito
+- **Mensajes informativos**: Guías para el usuario sobre qué hacer
 
 ## 🚀 Despliegue
 
@@ -172,7 +241,10 @@ Y actualizar la URL de la API en el código del frontend.
 2. **Frontend funcionando**: Ejecuta `npm run dev` y ve a `http://localhost:5173`
 3. **Carga de pizzas**: Verifica que las pizzas se cargan desde la API
 4. **Navegación**: Haz clic en cualquier pizza para ver su detalle
-5. **Estados de error**: Prueba desconectando el backend para ver los mensajes de error
+5. **Sistema de rutas**: Prueba todas las rutas desde el menú de navegación
+6. **Página 404**: Visita una URL inexistente para ver la página de error
+7. **Carrito**: Verifica que el botón del carrito redirija correctamente
+8. **Estados de error**: Prueba desconectando el backend para ver los mensajes de error
 
 ## 🤝 Contribuciones
 
@@ -189,6 +261,47 @@ Las contribuciones son bienvenidas. Por favor:
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## 📋 Changelog
+
+### v3.0.0 - Sistema de Rutas con React Router
+
+#### ✨ Nuevas Funcionalidades
+
+- **Sistema completo de rutas** con React Router DOM
+- **Página de perfil de usuario** con gestión de sesión
+- **Página 404 personalizada** para rutas no encontradas
+- **Navegación mejorada** con estados activos
+- **Reorganización de componentes** en carpeta `pages/`
+
+#### 🔧 Mejoras Técnicas
+
+- **React Router DOM v7.8.2** para enrutamiento
+- **NavLink** para navegación con estados activos
+- **Rutas dinámicas** con parámetros de URL
+- **Catch-all routes** para manejo de errores 404
+- **Navegación programática** con useNavigate
+
+#### 📁 Archivos Creados
+
+- `src/pages/Home.jsx` - Página principal (movida desde views/)
+- `src/pages/Login.jsx` - Página de login (movida desde components/)
+- `src/pages/Register.jsx` - Página de registro (movida desde components/)
+- `src/pages/Cart.jsx` - Página del carrito (movida desde components/)
+- `src/pages/Pizza.jsx` - Página de detalle (movida desde components/)
+- `src/pages/Profile.jsx` - **NUEVA** - Página de perfil de usuario
+- `src/pages/NotFound.jsx` - **NUEVA** - Página 404 personalizada
+
+#### 📁 Archivos Modificados
+
+- `src/App.jsx` - Configuración completa de rutas
+- `src/components/Navbar.jsx` - Enlaces de navegación actualizados
+
+#### 🗑️ Deprecado
+
+- `src/views/` - Carpeta eliminada, componentes movidos a `pages/`
+- `src/components/LoginPage.jsx` - Movido a `pages/Login.jsx`
+- `src/components/RegisterPage.jsx` - Movido a `pages/Register.jsx`
+- `src/components/Cart.jsx` - Movido a `pages/Cart.jsx`
+- `src/components/Pizza.jsx` - Movido a `pages/Pizza.jsx`
 
 ### v2.0.0 - Integración con Backend API
 
