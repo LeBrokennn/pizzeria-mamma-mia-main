@@ -1,43 +1,14 @@
-import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext.jsx";
+import { usePizza } from "../context/PizzaContext.jsx";
 
 const Pizza = () => {
-  const [pizza, setPizza] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
+  const { add } = useCart();
+  const { pizzas, loading, error, getPizzaById } = usePizza();
 
-  useEffect(() => {
-    const fetchPizza = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('http://localhost:5000/api/pizzas');
-        
-        if (!response.ok) {
-          throw new Error('Error al cargar las pizzas');
-        }
-        
-        const pizzas = await response.json();
-        const foundPizza = pizzas.find(p => p.id === id);
-        
-        if (!foundPizza) {
-          throw new Error('Pizza no encontrada');
-        }
-        
-        setPizza(foundPizza);
-      } catch (err) {
-        setError(err.message);
-        console.error('Error fetching pizza:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (id) {
-      fetchPizza();
-    }
-  }, [id]);
+  const pizza = getPizzaById(id);
 
   if (loading) {
     return (
@@ -65,7 +36,7 @@ const Pizza = () => {
     );
   }
 
-  if (!pizza) {
+  if (!loading && !pizza) {
     return (
       <main className="container py-4">
         <div className="alert alert-warning" role="alert">
@@ -115,7 +86,10 @@ const Pizza = () => {
             </div>
 
             <div className="d-grid gap-2 d-md-flex justify-content-md-start">
-              <button className="btn btn-primary btn-lg px-4 me-md-2">
+              <button 
+                className="btn btn-primary btn-lg px-4 me-md-2"
+                onClick={() => add(pizza.id)}
+              >
                 Agregar al Carrito
               </button>
               <button 

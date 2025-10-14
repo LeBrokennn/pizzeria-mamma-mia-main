@@ -6,7 +6,13 @@ Una aplicación web moderna para una pizzería construida con React y Vite, inte
 
 - **Catálogo de Pizzas**: Visualiza todas las pizzas disponibles con imágenes y precios desde API
 - **Páginas de Detalle**: Información completa de cada pizza con navegación dinámica
-- **Carrito de Compras**: Agrega y gestiona tus pedidos
+- **Carrito de Compras Completo**:
+  - Agrega productos desde Home y páginas de detalle
+  - Gestiona cantidades (incrementar/decrementar)
+  - Elimina productos del carrito
+  - Cálculo automático del total
+  - Visualización del total en el Navbar
+- **Context API**: Gestión de estado global para carrito y pizzas
 - **Autenticación**: Sistema de login y registro de usuarios
 - **Perfil de Usuario**: Gestión de información personal y sesión
 - **Sistema de Rutas**: Navegación completa con React Router DOM
@@ -91,7 +97,8 @@ src/
 │   ├── Profile.jsx     # Página de perfil de usuario
 │   └── NotFound.jsx    # Página 404 para rutas no encontradas
 ├── context/            # Contextos de React
-│   └── CartContext.jsx # Contexto del carrito de compras
+│   ├── CartContext.jsx # Contexto del carrito de compras
+│   └── PizzaContext.jsx # Contexto para gestión de pizzas
 ├── data/               # Datos estáticos (ya no se usa, reemplazado por API)
 │   └── pizzas.js       # Información de las pizzas (legacy)
 ├── utils/              # Utilidades
@@ -124,10 +131,14 @@ src/
 
 ### 🛒 Carrito de Compras
 
-- Agregar pizzas al carrito
-- Modificar cantidades
-- Eliminar productos
-- Cálculo automático del total
+- **Agregar productos**: Desde las cards en Home y páginas de detalle
+- **Gestión de cantidades**: Botones para incrementar/decrementar
+- **Eliminar productos**: Automático cuando la cantidad llega a 0
+- **Cálculo automático del total**: Se actualiza en tiempo real
+- **Visualización en Navbar**: Total siempre visible en la navegación
+- **Página de carrito completa**: Lista de productos con controles de cantidad
+- **Resumen de compra**: Total final y botón de pago
+- **Estado vacío**: Catálogo de pizzas cuando el carrito está vacío
 
 ### 👤 Autenticación
 
@@ -261,6 +272,64 @@ Las contribuciones son bienvenidas. Por favor:
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## 📋 Changelog
+
+### v4.0.0 - Sistema de Carrito de Compras Completo
+
+#### ✨ Nuevas Funcionalidades
+
+- **Carrito de compras completo** con Context API
+- **PizzaContext** para gestión centralizada de datos de pizzas
+- **Funcionalidad de agregar productos** desde Home y páginas de detalle
+- **Gestión de cantidades** con botones incrementar/decrementar
+- **Eliminación automática** de productos cuando cantidad llega a 0
+- **Cálculo automático del total** en tiempo real
+- **Visualización del total** en el Navbar
+- **Página de carrito mejorada** con controles de cantidad y resumen
+
+#### 🔧 Mejoras Técnicas
+
+- **Context API** para gestión de estado global
+- **PizzaContext** centraliza el fetch de pizzas
+- **CartContext** maneja todo el estado del carrito
+- **Hooks personalizados** (useCart, usePizza) para consumo de contextos
+- **Optimización de renders** con useMemo para cálculos
+- **Gestión de estado unificada** entre componentes
+
+#### 📁 Archivos Creados
+
+- `src/context/PizzaContext.jsx` - **NUEVO** - Contexto para gestión de pizzas
+- `src/context/CartContext.jsx` - **MEJORADO** - Contexto del carrito (ya existía)
+
+#### 📁 Archivos Modificados
+
+- `src/App.jsx` - Integración de PizzaProvider
+- `src/pages/Home.jsx` - Uso de PizzaContext
+- `src/components/Pizza.jsx` - Uso de PizzaContext y CartContext
+- `src/components/CardPizza.jsx` - Integración con CartContext
+- `src/pages/Cart.jsx` - **YA IMPLEMENTADO** - Página completa del carrito
+- `src/components/Navbar.jsx` - **YA IMPLEMENTADO** - Muestra total del carrito
+
+#### 🎯 Funcionalidades del Carrito
+
+1. **Agregar productos**:
+
+   - Botón "Añadir" en cards de Home
+   - Botón "Agregar al Carrito" en páginas de detalle
+
+2. **Gestión de cantidades**:
+
+   - Botones + y - en la página del carrito
+   - Eliminación automática cuando cantidad = 0
+
+3. **Visualización**:
+
+   - Total en tiempo real en el Navbar
+   - Lista completa de productos en página Cart
+   - Resumen de compra con total final
+
+4. **Estados**:
+   - Carrito vacío muestra catálogo de pizzas
+   - Carrito con productos muestra lista y controles
 
 ### v3.0.0 - Sistema de Rutas con React Router
 

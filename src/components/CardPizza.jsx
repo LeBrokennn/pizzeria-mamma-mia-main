@@ -1,10 +1,12 @@
 // src/components/CardPizza.jsx
 /* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
-import { clp } from "../utils/format"; 
+import { clp } from "../utils/format";
+import { useCart } from "../context/CartContext.jsx"; 
 
 const CardPizza = ({ id, name, price, ingredients, img }) => {
   const navigate = useNavigate();
+  const { add } = useCart();
 
   const handleCardClick = () => {
     navigate(`/pizza/${id}`);
@@ -30,7 +32,7 @@ const CardPizza = ({ id, name, price, ingredients, img }) => {
               className="btn btn-primary"
               onClick={(e) => {
                 e.stopPropagation();
-                // Aquí puedes agregar la lógica para añadir al carrito
+                add(id);
               }}
             >
               Añadir

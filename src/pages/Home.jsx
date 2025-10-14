@@ -1,36 +1,11 @@
-import { useState, useEffect } from "react";
 import Header from "../components/Header.jsx";
 import CardPizza from "../components/CardPizza.jsx";
+import { usePizza } from "../context/PizzaContext.jsx";
 
 // src/pages/Home.jsx
 
 const Home = () => {
-  const [pizzas, setPizzas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchPizzas = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('http://localhost:5000/api/pizzas');
-        
-        if (!response.ok) {
-          throw new Error('Error al cargar las pizzas');
-        }
-        
-        const data = await response.json();
-        setPizzas(data);
-      } catch (err) {
-        setError(err.message);
-        console.error('Error fetching pizzas:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPizzas();
-  }, []);
+  const { pizzas, loading, error } = usePizza();
 
   if (loading) {
     return (
