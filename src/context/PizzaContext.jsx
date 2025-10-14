@@ -5,39 +5,30 @@ import { pizzas as staticPizzas } from "../data/pizzas.js";
 const PizzaContext = createContext(null);
 
 export const PizzaProvider = ({ children }) => {
-  const [pizzas, setPizzas] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [pizzas, setPizzas] = useState(staticPizzas); // Usar datos estáticos por defecto
+  const [loading, setLoading] = useState(false); // No mostrar loading por defecto
   const [error, setError] = useState(null);
 
   const fetchPizzas = async () => {
-    setLoading(true);
-    setError(null);
-    
+    // Intentar obtener datos del backend en segundo plano
     try {
-      // Crear un AbortController para timeout
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
       
-      // Intentar conectar al backend primero
       const response = await fetch('http://localhost:5000/api/pizzas', {
         signal: controller.signal
       });
       
       clearTimeout(timeoutId);
       
-      if (!response.ok) {
-        throw new Error('Backend no disponible');
+      if (response.ok) {
+        const data = await response.json();
+        setPizzas(data);
+        console.log('Datos del backend cargados exitosamente');
       }
-      
-      const data = await response.json();
-      setPizzas(data);
     } catch (err) {
-      // Si el backend no está disponible, usar datos estáticos
-      console.warn('Backend no disponible, usando datos estáticos:', err.message);
-      setPizzas(staticPizzas);
-      setError(null); // No mostrar error si tenemos datos estáticos
-    } finally {
-      setLoading(false);
+      // Silenciosamente usar datos estáticos si el backend no está disponible
+      console.log('Usando datos estáticos (backend no disponible)');
     }
   };
 
