@@ -10,12 +10,20 @@ export const PizzaProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const fetchPizzas = async () => {
+    setLoading(true);
+    setError(null);
+    
     try {
-      setLoading(true);
-      setError(null);
+      // Crear un AbortController para timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
       
       // Intentar conectar al backend primero
-      const response = await fetch('http://localhost:5000/api/pizzas');
+      const response = await fetch('http://localhost:5000/api/pizzas', {
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
       
       if (!response.ok) {
         throw new Error('Backend no disponible');
