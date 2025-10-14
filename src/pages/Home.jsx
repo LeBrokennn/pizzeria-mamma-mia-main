@@ -28,11 +28,9 @@ const Home = () => {
       <>
         <Header />
         <main className="container py-4">
-          <div className="alert alert-danger" role="alert">
-            <h4 className="alert-heading">Error!</h4>
-            <p>{error}</p>
-            <hr />
-            <p className="mb-0">Asegúrate de que el backend esté ejecutándose en el puerto 5000.</p>
+          <div className="alert alert-warning" role="alert">
+            <h4 className="alert-heading">Información</h4>
+            <p>Usando datos de demostración. Para datos en tiempo real, conecta el backend.</p>
           </div>
         </main>
       </>

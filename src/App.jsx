@@ -5,7 +5,7 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Cart from "./pages/Cart.jsx";
-import Pizza from "./pages/Pizza.jsx";
+import Pizza from "./components/Pizza.jsx";
 import Profile from "./pages/Profile.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
