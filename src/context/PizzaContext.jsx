@@ -1,5 +1,6 @@
 // src/context/PizzaContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
+import { pizzas as staticPizzas } from "../data/pizzas.js";
 
 const PizzaContext = createContext(null);
 
@@ -12,17 +13,21 @@ export const PizzaProvider = ({ children }) => {
     try {
       setLoading(true);
       setError(null);
+      
+      // Intentar conectar al backend primero
       const response = await fetch('http://localhost:5000/api/pizzas');
       
       if (!response.ok) {
-        throw new Error('Error al cargar las pizzas');
+        throw new Error('Backend no disponible');
       }
       
       const data = await response.json();
       setPizzas(data);
     } catch (err) {
-      setError(err.message);
-      console.error('Error fetching pizzas:', err);
+      // Si el backend no está disponible, usar datos estáticos
+      console.warn('Backend no disponible, usando datos estáticos:', err.message);
+      setPizzas(staticPizzas);
+      setError(null); // No mostrar error si tenemos datos estáticos
     } finally {
       setLoading(false);
     }
