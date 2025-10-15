@@ -10,26 +10,8 @@ export const PizzaProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const fetchPizzas = async () => {
-    // Intentar obtener datos del backend en segundo plano
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
-      
-      const response = await fetch('http://localhost:5000/api/pizzas', {
-        signal: controller.signal
-      });
-      
-      clearTimeout(timeoutId);
-      
-      if (response.ok) {
-        const data = await response.json();
-        setPizzas(data);
-        console.log('Datos del backend cargados exitosamente');
-      }
-    } catch (err) {
-      // Silenciosamente usar datos estáticos si el backend no está disponible
-      console.log('Usando datos estáticos (backend no disponible)');
-    }
+    // NO intentar conectar al backend - usar solo datos estáticos
+    console.log('Usando datos estáticos de demostración');
   };
 
   const getPizzaById = (id) => {
