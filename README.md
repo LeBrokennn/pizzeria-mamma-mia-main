@@ -1,6 +1,7 @@
 # 🍕 Pizzería Mamma Mia
 
 Una aplicación web moderna para una pizzería construida con React y Vite, integrada con un backend API para gestión de pizzas.
+https://lebrokennn.github.io/pizzeria-mamma-mia-main/
 
 ## 🚀 Características
 
@@ -399,11 +400,3 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 #### 🗑️ Deprecado
 
 - `src/data/pizzas.js` - Reemplazado por datos de API
-
-## 👨‍💻 Autor
-
-Desarrollado con ❤️ para la pizzería Mamma Mia
-
----
-
-¡Disfruta de tu pizza! 🍕
