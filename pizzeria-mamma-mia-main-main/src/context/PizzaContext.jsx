@@ -16,6 +16,42 @@ export const PizzaProvider = ({ children }) => {
     return;
   };
 
+  // Función para obtener una pizza específica por ID desde la API
+  const fetchPizzaById = async (id) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      console.log(`🔍 Buscando pizza con ID: ${id}`);
+      
+      // Intentar obtener desde la API
+      const response = await fetch(`http://localhost:5000/api/pizzas/${id}`);
+      
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      
+      const pizzaData = await response.json();
+      console.log('✅ Pizza obtenida desde API:', pizzaData);
+      
+      return pizzaData;
+    } catch (error) {
+      console.log('⚠️ Error al conectar con API, usando datos estáticos:', error.message);
+      
+      // Fallback a datos estáticos
+      const staticPizza = staticPizzas.find(pizza => pizza.id === id);
+      if (staticPizza) {
+        console.log('✅ Pizza encontrada en datos estáticos:', staticPizza);
+        return staticPizza;
+      }
+      
+      setError('Pizza no encontrada');
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getPizzaById = (id) => {
     return pizzas.find(pizza => pizza.id === id);
   };
@@ -31,6 +67,7 @@ export const PizzaProvider = ({ children }) => {
     loading,
     error,
     fetchPizzas,
+    fetchPizzaById,
     getPizzaById
   };
 

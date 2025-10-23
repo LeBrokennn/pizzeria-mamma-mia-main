@@ -1,20 +1,16 @@
 // src/components/CardPizza.jsx
 /* eslint-disable react/prop-types */
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { clp } from "../utils/format";
 import { useCart } from "../context/CartContext.jsx"; 
 
 const CardPizza = ({ id, name, price, ingredients, img }) => {
-  const navigate = useNavigate();
   const { add } = useCart();
-
-  const handleCardClick = () => {
-    navigate(`/pizza/${id}`);
-  };
 
   return (
     <div className="col">
-      <div className="card h-100 shadow-sm" style={{ cursor: 'pointer' }} onClick={handleCardClick}>
+      <Link to={`/pizza/${id}`} className="text-decoration-none">
+        <div className="card h-100 shadow-sm" style={{ cursor: 'pointer' }}>
         <img src={img} className="card-img-top" alt={`Pizza ${name}`} />
         <div className="card-body">
           <h5 className="card-title mb-2">{name}</h5>
@@ -39,7 +35,8 @@ const CardPizza = ({ id, name, price, ingredients, img }) => {
             </button>
           </div>
         </div>
-      </div>
+        </div>
+      </Link>
     </div>
   );
 };

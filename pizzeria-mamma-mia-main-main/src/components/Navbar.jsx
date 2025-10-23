@@ -1,11 +1,12 @@
 // src/components/Navbar.jsx
 import { NavLink } from "react-router-dom";
 import { clp } from "../utils/format";
-import { useCart } from "../context/CartContext.jsx"; // contexto
+import { useCart } from "../context/CartContext.jsx";
+import { useUser } from "../context/UserContext.jsx";
 
 const Navbar = () => {
-  const { total } = useCart(); // total ahora viene del contexto
-  const token = false; // simulación
+  const { total } = useCart();
+  const { token, logout } = useUser();
 
   const linkClass = ({ isActive }) =>
     "btn btn-outline-light" + (isActive ? " fw-bold" : "");
@@ -29,7 +30,12 @@ const Navbar = () => {
             <NavLink to="/profile" className={linkClass}>
               🔓 Profile
             </NavLink>
-            <button className="btn btn-outline-light">🔒 Logout</button>
+            <button 
+              className="btn btn-outline-light"
+              onClick={logout}
+            >
+              🔒 Logout
+            </button>
           </>
         ) : (
           <>

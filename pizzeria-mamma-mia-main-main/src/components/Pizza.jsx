@@ -1,14 +1,25 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext.jsx";
 import { usePizza } from "../context/PizzaContext.jsx";
+import { useState, useEffect } from "react";
 
 const Pizza = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { add } = useCart();
-  const { pizzas, loading, error, getPizzaById } = usePizza();
+  const { loading, error, fetchPizzaById } = usePizza();
+  const [pizza, setPizza] = useState(null);
 
-  const pizza = getPizzaById(id);
+  useEffect(() => {
+    const loadPizza = async () => {
+      if (id) {
+        const pizzaData = await fetchPizzaById(id);
+        setPizza(pizzaData);
+      }
+    };
+    
+    loadPizza();
+  }, [id, fetchPizzaById]);
 
   if (loading) {
     return (
@@ -28,7 +39,13 @@ const Pizza = () => {
       <main className="container py-4">
         <div className="alert alert-warning" role="alert">
           <h4 className="alert-heading">Información</h4>
-          <p>Usando datos de demostración. Para datos en tiempo real, conecta el backend.</p>
+          <p>No se pudo conectar con el backend. Usando datos de demostración.</p>
+          <button 
+            className="btn btn-outline-primary"
+            onClick={() => window.location.reload()}
+          >
+            Reintentar
+          </button>
         </div>
       </main>
     );

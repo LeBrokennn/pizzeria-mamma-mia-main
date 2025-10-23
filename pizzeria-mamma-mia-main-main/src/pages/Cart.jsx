@@ -1,10 +1,12 @@
 // src/pages/Cart.jsx
 import { clp } from "../utils/format";
 import { useCart } from "../context/CartContext.jsx";
+import { useUser } from "../context/UserContext.jsx";
 import { pizzas } from "../data/pizzas.js";
 
 const Cart = () => {
   const { cart, inc, dec, add, total } = useCart();
+  const { token } = useUser();
 
   const isEmpty = cart.length === 0;
 
@@ -77,11 +79,14 @@ const Cart = () => {
                   <span>Total</span>
                   <strong>${clp(total)}</strong>
                 </div>
-                <button className="btn btn-success w-100 mt-2" disabled={isEmpty}>
-                  Pagar
+                <button 
+                  className="btn btn-success w-100 mt-2" 
+                  disabled={isEmpty || !token}
+                >
+                  {!token ? 'Inicia sesión para pagar' : 'Pagar'}
                 </button>
                 <small className="d-block text-muted mt-2">
-                  * Botón sin acción por ahora.
+                  {!token ? 'Debes iniciar sesión para realizar el pago.' : '* Botón sin acción por ahora.'}
                 </small>
               </div>
             </div>
