@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { clp } from "../utils/format";
 import { useCart } from "../context/CartContext.jsx";
 import { useUser } from "../context/UserContext.jsx";
@@ -7,9 +7,15 @@ import { useUser } from "../context/UserContext.jsx";
 const Navbar = () => {
   const { total } = useCart();
   const { token, logout } = useUser();
+  const navigate = useNavigate();
 
   const linkClass = ({ isActive }) =>
     "btn btn-outline-light" + (isActive ? " fw-bold" : "");
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark px-3">
@@ -32,7 +38,7 @@ const Navbar = () => {
             </NavLink>
             <button 
               className="btn btn-outline-light"
-              onClick={logout}
+              onClick={handleLogout}
             >
               🔒 Logout
             </button>

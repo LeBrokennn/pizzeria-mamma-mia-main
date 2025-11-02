@@ -1,13 +1,18 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext.jsx";
 
 const Register = () => {
   const [form, setForm] = useState({ email: "", password: "", confirm: "" });
   const [msg, setMsg] = useState({ type: "", text: "" });
+  const [loading, setLoading] = useState(false);
+  const { register } = useUser();
+  const navigate = useNavigate();
 
   const onChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password, confirm } = form;
 
@@ -20,7 +25,23 @@ const Register = () => {
     if (password !== confirm) {
       return setMsg({ type: "danger", text: "Las contraseñas no coinciden." });
     }
-    setMsg({ type: "success", text: "Registro exitoso 🎉" });
+
+    setLoading(true);
+    setMsg({ type: "", text: "" });
+
+    const result = await register(email, password);
+
+    if (result.success) {
+      setMsg({ type: "success", text: "Registro exitoso 🎉" });
+      // Redirigir al home después de un breve delay
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } else {
+      setMsg({ type: "danger", text: result.error || "Error al registrar usuario. Intenta nuevamente." });
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -93,8 +114,12 @@ const Register = () => {
                   </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary w-100">
-                  Registrarse
+                <button 
+                  type="submit" 
+                  className="btn btn-primary w-100"
+                  disabled={loading}
+                >
+                  {loading ? "Cargando..." : "Registrarse"}
                 </button>
               </form>
             </div>

@@ -1,13 +1,18 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext.jsx";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [msg, setMsg] = useState({ type: "", text: "" });
+  const [loading, setLoading] = useState(false);
+  const { login } = useUser();
+  const navigate = useNavigate();
 
   const onChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = form;
 
@@ -18,7 +23,22 @@ const Login = () => {
       return setMsg({ type: "warning", text: "La contraseña debe tener al menos 6 caracteres." });
     }
 
-    setMsg({ type: "success", text: "Inicio de sesión exitoso ✅" });
+    setLoading(true);
+    setMsg({ type: "", text: "" });
+
+    const result = await login(email, password);
+
+    if (result.success) {
+      setMsg({ type: "success", text: "Inicio de sesión exitoso ✅" });
+      // Redirigir al home después de un breve delay
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } else {
+      setMsg({ type: "danger", text: result.error || "Error al iniciar sesión. Verifica tus credenciales." });
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -74,8 +94,12 @@ const Login = () => {
                   </div>
                 </div>
 
-                <button type="submit" className="btn btn-success w-100">
-                  Ingresar
+                <button 
+                  type="submit" 
+                  className="btn btn-success w-100"
+                  disabled={loading}
+                >
+                  {loading ? "Cargando..." : "Ingresar"}
                 </button>
               </form>
             </div>

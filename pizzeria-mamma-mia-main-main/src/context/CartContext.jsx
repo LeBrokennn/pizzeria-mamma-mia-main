@@ -28,11 +28,13 @@ export const CartProvider = ({ children }) => {
       return p ? [...c, { id: p.id, name: p.name, price: p.price, img: p.img, qty: 1 }] : c;
     });
 
+  const clear = () => setCart([]);
+
   const total = useMemo(() => cart.reduce((sum, it) => sum + it.price * it.qty, 0), [cart]);
   const count = useMemo(() => cart.reduce((sum, it) => sum + it.qty, 0), [cart]);
 
   return (
-    <CartContext.Provider value={{ cart, inc, dec, add, total, count }}>
+    <CartContext.Provider value={{ cart, inc, dec, add, clear, total, count }}>
       {children}
     </CartContext.Provider>
   );

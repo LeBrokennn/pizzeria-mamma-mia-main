@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext.jsx";
 
 const Profile = () => {
-  const [userEmail] = useState("usuario@ejemplo.com"); // Simulamos un usuario logueado
+  const { email, logout, getProfile, token } = useUser();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Obtener el perfil del usuario cuando se carga la página
+    const fetchUserProfile = async () => {
+      if (token) {
+        await getProfile();
+      }
+      setLoading(false);
+    };
+    
+    fetchUserProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   const handleLogout = () => {
-    // Aquí se implementaría la lógica de cerrar sesión
-    // Por ahora solo redirigimos al home
-    alert("Sesión cerrada exitosamente");
+    logout();
     navigate("/");
   };
 
@@ -34,7 +47,7 @@ const Profile = () => {
                   <input
                     type="email"
                     className="form-control"
-                    value={userEmail}
+                    value={loading ? "Cargando..." : (email || "No disponible")}
                     readOnly
                     style={{ backgroundColor: '#f8f9fa' }}
                   />
