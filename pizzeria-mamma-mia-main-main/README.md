@@ -71,6 +71,26 @@ Para que la aplicación funcione completamente, necesitas levantar el backend:
 
 **⚠️ Importante**: El frontend requiere que el backend esté ejecutándose para mostrar las pizzas correctamente.
 
+## 🔑 Credenciales de Prueba
+
+Para probar la aplicación, puedes usar estas credenciales o crear un nuevo usuario:
+
+### Usuario de Prueba
+
+**Email**: `test@ejemplo.com`  
+**Contraseña**: `123456`
+
+> **Nota**: Si el backend tiene credenciales diferentes predefinidas, actualiza esta sección con las credenciales correctas. También puedes crear un nuevo usuario desde la página de Registro.
+
+### Inicio Rápido
+
+1. **Levanta el backend** en `http://localhost:5000`
+2. **Levanta el frontend** con `npm run dev`
+3. **Regístrate** o **Inicia sesión** con las credenciales de arriba
+4. **Agrega pizzas** al carrito desde el home
+5. **Ve al carrito** y haz clic en **Pagar** (requiere estar autenticado)
+6. **Verifica** que se muestra el mensaje de éxito y el carrito se limpia
+
 ## 🏗️ Scripts Disponibles
 
 - `npm run dev` - Inicia el servidor de desarrollo
@@ -98,7 +118,10 @@ src/
 │   └── NotFound.jsx    # Página 404 para rutas no encontradas
 ├── context/            # Contextos de React
 │   ├── CartContext.jsx # Contexto del carrito de compras
-│   └── PizzaContext.jsx # Contexto para gestión de pizzas
+│   ├── PizzaContext.jsx # Contexto para gestión de pizzas
+│   └── UserContext.jsx # Contexto de autenticación y usuario
+├── components/         # Componentes reutilizables
+│   └── ProtectedRoute.jsx # Componente para proteger rutas
 ├── data/               # Datos estáticos (ya no se usa, reemplazado por API)
 │   └── pizzas.js       # Información de las pizzas (legacy)
 ├── utils/              # Utilidades
@@ -138,19 +161,26 @@ src/
 - **Visualización en Navbar**: Total siempre visible en la navegación
 - **Página de carrito completa**: Lista de productos con controles de cantidad
 - **Resumen de compra**: Total final y botón de pago
+- **Checkout funcional**: Envío del carrito al backend en `/api/checkouts`
+- **Mensajes de éxito/error**: Notificaciones al realizar la compra
+- **Limpieza automática**: El carrito se limpia después de una compra exitosa
 - **Estado vacío**: Catálogo de pizzas cuando el carrito está vacío
 
 ### 👤 Autenticación
 
-- Sistema de registro de nuevos usuarios
-- Inicio de sesión
-- Gestión de sesiones
+- **Registro de usuarios**: Crear nueva cuenta con email y contraseña
+- **Inicio de sesión**: Login con credenciales almacenadas
+- **Logout**: Cerrar sesión desde Navbar o Perfil
+- **Persistencia de sesión**: Token y email guardados en localStorage
+- **Protección de rutas**: Rutas protegidas que requieren autenticación
+- **Integración completa con backend**: Consumo de API `/api/auth/login` y `/api/auth/register`
 
 ### 👤 Perfil de Usuario
 
-- **Información personal**: Visualización del email del usuario
+- **Información personal**: Visualización del email del usuario autenticado
+- **Obtención de perfil**: Carga automática desde `/api/auth/me`
 - **Estado de cuenta**: Indicador de cuenta activa
-- **Cerrar sesión**: Botón para finalizar la sesión
+- **Cerrar sesión**: Botón funcional para finalizar la sesión
 - **Navegación**: Enlaces de regreso al inicio
 
 ### 🛣️ Sistema de Rutas
@@ -178,13 +208,35 @@ src/
 
 ### Endpoints Utilizados
 
+#### Autenticación
+- **POST** `http://localhost:5000/api/auth/register` - Registrar nuevo usuario
+  - Body: `{ email: string, password: string }`
+  - Response: `{ token: string, email: string }`
+- **POST** `http://localhost:5000/api/auth/login` - Iniciar sesión
+  - Body: `{ email: string, password: string }`
+  - Response: `{ token: string, email: string }`
+- **GET** `http://localhost:5000/api/auth/me` - Obtener perfil del usuario autenticado
+  - Headers: `Authorization: Bearer {token}`
+  - Response: `{ email: string, ... }`
+
+#### Pizzas
 - **GET** `http://localhost:5000/api/pizzas` - Obtiene todas las pizzas disponibles
+- **GET** `http://localhost:5000/api/pizzas/:id` - Obtiene una pizza específica por ID
+
+#### Checkout
+- **POST** `http://localhost:5000/api/checkouts` - Procesar compra del carrito
+  - Headers: `Authorization: Bearer {token}`
+  - Body: `{ items: Array, total: number }`
+  - Response: Datos de la compra procesada
 
 ### Características de la Integración
 
 - **useEffect**: Hook utilizado para consumir la API al montar componentes
 - **fetch API**: Peticiones HTTP nativas para obtener datos
+- **Autenticación JWT**: Token almacenado y enviado en headers
+- **Persistencia de sesión**: Token y email guardados en localStorage
 - **Manejo de estados**: Loading, error y success states
+- **Protección de rutas**: Verificación de autenticación antes de acceder
 - **Navegación por ID**: Búsqueda de pizzas específicas por su identificador
 
 ## 🛣️ Sistema de Navegación
@@ -257,6 +309,49 @@ Y actualizar la URL de la API en el código del frontend.
 7. **Carrito**: Verifica que el botón del carrito redirija correctamente
 8. **Estados de error**: Prueba desconectando el backend para ver los mensajes de error
 
+### 🔐 Credenciales de Prueba
+
+Para probar el sistema de autenticación, puedes usar las siguientes credenciales (si el backend las tiene predefinidas) o crear un nuevo usuario:
+
+#### Opción 1: Crear un nuevo usuario
+1. Ve a la página de **Registro** (`/register`)
+2. Completa el formulario con:
+   - **Email**: `test@ejemplo.com` (o cualquier email válido)
+   - **Contraseña**: `123456` (mínimo 6 caracteres)
+   - **Confirmar contraseña**: `123456`
+3. Haz clic en **Registrarse**
+4. Serás redirigido automáticamente al home
+
+#### Opción 2: Iniciar sesión (si tienes usuario existente)
+1. Ve a la página de **Login** (`/login`)
+2. Ingresa tus credenciales:
+   - **Email**: `test@ejemplo.com` (o el email que hayas registrado)
+   - **Contraseña**: `123456` (o la contraseña que hayas usado)
+3. Haz clic en **Ingresar**
+4. Serás redirigido automáticamente al home
+
+#### Funcionalidades para probar:
+
+✅ **Autenticación**:
+- Registrar nuevo usuario
+- Iniciar sesión con credenciales válidas
+- Verificar que las rutas protegidas requieren autenticación
+- Acceder a `/profile` para ver tu email
+- Cerrar sesión desde Navbar o Perfil
+
+✅ **Carrito y Checkout**:
+- Agregar pizzas al carrito
+- Modificar cantidades
+- Ir al carrito (`/cart`)
+- Iniciar sesión (requerido para checkout)
+- Hacer clic en **Pagar** para procesar la compra
+- Ver mensaje de éxito
+- Verificar que el carrito se limpia después de la compra
+
+### ⚠️ Nota Importante
+
+Si el backend tiene usuarios predefinidos, consulta la documentación del backend para obtener las credenciales de prueba correctas. Si necesitas cambiar las credenciales de ejemplo en esta documentación, edita la sección "Credenciales de Prueba" con los datos correctos.
+
 ## 🤝 Contribuciones
 
 Las contribuciones son bienvenidas. Por favor:
@@ -272,6 +367,64 @@ Las contribuciones son bienvenidas. Por favor:
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## 📋 Changelog
+
+### v5.0.0 - Autenticación Completa y Checkout
+
+#### ✨ Nuevas Funcionalidades
+
+- **Sistema de autenticación completo**:
+  - Login funcional con integración al backend `/api/auth/login`
+  - Registro de usuarios con integración al backend `/api/auth/register`
+  - Logout que limpia sesión y redirige
+  - Persistencia de sesión con localStorage
+- **Perfil de usuario mejorado**:
+  - Obtención automática del perfil desde `/api/auth/me`
+  - Visualización del email del usuario autenticado
+  - Botón de logout funcional
+- **Checkout funcional**:
+  - Envío del carrito al backend en `/api/checkouts`
+  - Mensajes de éxito y error
+  - Limpieza automática del carrito después de compra exitosa
+  - Validación de autenticación antes de procesar compra
+- **Protección de rutas**:
+  - Rutas protegidas que requieren autenticación
+  - Redirección automática a login si no está autenticado
+  - Redirección a home si intenta acceder a login/register estando autenticado
+
+#### 🔧 Mejoras Técnicas
+
+- **UserContext completo**:
+  - Métodos `login()`, `register()`, `logout()`, `getProfile()`
+  - Gestión de estado de token y email
+  - Persistencia en localStorage
+  - Manejo de errores en todas las peticiones
+- **Integración con backend**:
+  - Autenticación JWT con Bearer token
+  - Headers de autorización en peticiones protegidas
+  - Manejo de estados de carga y errores
+- **CartContext mejorado**:
+  - Método `clear()` para limpiar el carrito
+- **UX mejorada**:
+  - Estados de carga en formularios
+  - Mensajes de éxito/error claros
+  - Redirecciones automáticas después de acciones
+
+#### 📁 Archivos Modificados
+
+- `src/context/UserContext.jsx` - **COMPLETAMENTE REFACTORIZADO** - Sistema completo de autenticación
+- `src/pages/Login.jsx` - Integrado con UserContext y backend
+- `src/pages/Register.jsx` - Integrado con UserContext y backend
+- `src/pages/Profile.jsx` - Muestra email real y logout funcional
+- `src/pages/Cart.jsx` - Checkout implementado con mensajes
+- `src/components/Navbar.jsx` - Logout funcional con redirección
+- `src/context/CartContext.jsx` - Método clear() agregado
+
+#### 🎯 Endpoints del Backend Utilizados
+
+1. **POST** `/api/auth/register` - Registrar nuevo usuario
+2. **POST** `/api/auth/login` - Iniciar sesión
+3. **GET** `/api/auth/me` - Obtener perfil del usuario
+4. **POST** `/api/checkouts` - Procesar compra del carrito
 
 ### v4.0.0 - Sistema de Carrito de Compras Completo
 
